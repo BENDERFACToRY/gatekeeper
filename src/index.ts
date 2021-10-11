@@ -1,2 +1,2 @@
-import './discordClient'
+// import './discordClient'
 import './server'

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "esnext",
     "module": "commonjs",
     "outDir": "./dist", 
     "strict": true,                                 /* Enable all strict type-checking options. */

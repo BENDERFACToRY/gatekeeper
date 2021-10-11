@@ -42,14 +42,12 @@ client.on('message', message => {
     message.channel.send(`I'm honored by your presence ${member.nickname || member.user.username}`)
   }
 
-
 	if (message.content === '!ping') {
 		// send back "Pong." to the channel the message was sent in
 		message.channel.send('Pong.');
     client.user?.setActivity('dnd');
 	} else {
     client.user?.setActivity('invisible');
-
   }
 
 });
