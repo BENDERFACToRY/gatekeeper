@@ -1,6 +1,6 @@
 FROM node
 
-COPY dist /app
+COPY dist /app/dist
 
 WORKDIR /app
 
