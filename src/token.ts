@@ -9,7 +9,7 @@ export async function getToken() {
 
   // Fetch the vault token with the app secret
   const response = await fetch(`${process.env.VAULT_TOKEN_URL}?${params}`)
-  const { token } = await response.json()
+  const { token } = await response.json() as { token: string }
   
   return token
 }

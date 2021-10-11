@@ -1,4 +1,5 @@
 import { DiscordGuild, DiscordMember } from './types'
+import fetch, { Response } from 'node-fetch'
 
 export class DiscordAPI {
   static DISCORD_API = 'https://discord.com/api/v9'
@@ -27,7 +28,7 @@ export class DiscordAPI {
 
   async getGuildInfo(guildId: string): Promise<DiscordGuild> {
     const res = await this.fetch(`/guilds/${guildId}`)
-    const data = await res.json()
+    const data = await res.json() as DiscordGuild
     return data
   }
 
@@ -36,7 +37,7 @@ export class DiscordAPI {
     userId: string,
   ): Promise<DiscordMember | { code: number; message: string }> {
     const res = await this.fetch(`/guilds/${guildId}/members/${userId}`)
-    const data = await res.json()
+    const data = await res.json() as DiscordMember
     return data
   }
 }
