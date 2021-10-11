@@ -1,0 +1,13 @@
+networks:
+  proxy:
+    external:
+      name: proxy
+
+services:
+  app:
+    image: ghcr.io/benderfactory/gatekeeper:main
+    restart: unless-stopped
+    expose:
+      - '80'
+    env_file:
+      - .env

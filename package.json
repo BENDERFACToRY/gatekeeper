@@ -8,7 +8,7 @@
     "preserve": "npm run build",
     "serve": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -r dotenv/config -q dist/index.js\"",
     "prestart": "npm run build",
-    "start": "cross-env NODE_ENV=production node -r dotenv/config dist/index.js",
+    "start": "cross-env NODE_ENV=`production node -r dotenv/config dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,7 +24,7 @@
   "dependencies": {
     "bufferutil": "^4.0.3",
     "cross-env": "^7.0.3",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.2.0",
     "dot-env": "^0.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
