@@ -45,7 +45,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
   deploy:
-    runs-on: bndhost1
+    runs-on: bndhost1 
+    needs: build
     steps:
       - uses: actions/checkout@v2
       - name: Copy environment
