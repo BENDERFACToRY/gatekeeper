@@ -28,13 +28,14 @@ app.get('/check/:userId', async function (req, res) {
   // Check the user on the discord guild(server) and update its 
   if (process.env.DISCORD_TOKEN && process.env.DISCORD_GUILD_ID && graphQLClient) {
     const { userId } = req.params
+    console.log("Checking user:", userId)
 
     if (!userId) {
-      return new Response('Missing userId', { status: 400 })
+      return res.status(400).send('Missing userId')
     }
     // make sure the userId is numeric
     if (!userId.match(/^\d+$/)) {
-      return new Response('Error: Invalid userId', { status: 400 })
+      return res.status(400).send('Error: Invalid userId')
     }
 
     const api = new DiscordAPI(process.env.DISCORD_TOKEN, true)
@@ -58,7 +59,7 @@ app.get('/check/:userId', async function (req, res) {
     // map guild into into names
     if ('message' in member_info) {
       // no such user?
-      return new Response(`Error: ${member_info.message}`, { status: 400 })
+      return res.status(400).send(`Error: ${member_info.message}`)
     }
 
     const member_roles = member_info.roles.map((role) => role_map[role])
@@ -68,7 +69,7 @@ app.get('/check/:userId', async function (req, res) {
       console.log("Tok", token)
       graphQLClient.setHeader('Authorization', `Bearer ${token}`)
   
-      console.log("Checking", userId)
+      console.log("Resolved", userId, '->', member_roles)
   
       await graphQLClient.request(SET_ROLES, { id: member_info.user.id, roles: member_roles })
       res.json({

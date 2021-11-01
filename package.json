@@ -1,5 +1,5 @@
 {
-  "name": "vault-bot",
+  "name": "gatekeeper",
   "version": "0.0.1",
   "description": "The discord bot managing the vault",
   "main": "dist/index.js",
