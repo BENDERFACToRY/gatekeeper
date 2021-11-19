@@ -1,32 +1,17 @@
 
 import express from 'express'
-import { GraphQLClient, gql  } from 'graphql-request'
-
-import { getToken } from './token'
 import { DiscordGuild } from './types'
 import { DiscordAPI } from './discordAPI'
 
-const graphQLClient = process.env.VAULT_API_URL && new GraphQLClient(process.env.VAULT_API_URL)
+// const graphQLClient = process.env.VAULT_API_URL && new GraphQLClient(process.env.VAULT_API_URL)
 
 const app = express()
-
-const SET_ROLES = gql`
-  mutation setRoles($id: String!, $roles: jsonb!) {
-    update_discord_by_pk(
-      pk_columns: { id:$id },
-      _set: {
-        roles: $roles
-      }
-    ) {
-      id roles
-    }
-  }`
 
 let guild_info: DiscordGuild
 
 app.get('/check/:userId', async function (req, res) {
   // Check the user on the discord guild(server) and update its 
-  if (process.env.DISCORD_TOKEN && process.env.DISCORD_GUILD_ID && graphQLClient) {
+  if (process.env.DISCORD_TOKEN && process.env.DISCORD_GUILD_ID) {
     const { userId } = req.params
     console.log("Checking user:", userId)
 
@@ -63,21 +48,10 @@ app.get('/check/:userId', async function (req, res) {
     }
 
     const member_roles = member_info.roles.map((role) => role_map[role])
-
-    try {
-      const token = await getToken()
-      console.log("Tok", token)
-      graphQLClient.setHeader('Authorization', `Bearer ${token}`)
-  
-      console.log("Resolved", userId, '->', member_roles)
-  
-      await graphQLClient.request(SET_ROLES, { id: member_info.user.id, roles: member_roles })
-      res.json({
-        roles: member_roles
-      })
-    } catch (e) {
-      console.error(e)
-    }
+    res.set('Content-Type', 'application/json')
+    res.json({
+      roles: member_roles
+    })
   }
 
   res.end()
